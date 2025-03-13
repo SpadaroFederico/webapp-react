@@ -1,36 +1,71 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [name, setName] = useState('');
+  const [vote, setVote] = useState(1);
+  const [text, setText] = useState('');
 
-  useEffect(() => {
-    axios.get(`http://localhost:3000/movies/${id}`)
-      .then(response => setMovie(response.data))
-      .catch(error => console.error(error));
-  }, [id]);
-
-  if (!movie) return <div>Loading...</div>;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:3000/movies/${id}/reviews`, {
+        name,
+        vote,
+        text,
+      });
+      alert(response.data.message);
+      // Ricarica i dettagli del film per mostrare la nuova recensione
+      const movieResponse = await axios.get(`http://localhost:3000/movies/${id}`);
+      setMovie(movieResponse.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="container mt-4">
-      <img src={movie.image} alt={movie.title} style={{ width: '200px', height: 'auto' }} />
-      <h1>{movie.title}</h1>
-      <p>Regista: {movie.director}</p>
-      <p>Genere: {movie.genre}</p>
-      <p>Anno di uscita: {movie.release_year}</p>
-      <p>{movie.abstract}</p>
-      <h2>Recensioni</h2>
-      <ul className="list-group">
-        {movie.reviews.map(review => (
-          <li key={review.id} className="list-group-item">
-            <strong>{review.name}</strong> - Voto: {review.vote}
-            <p>{review.text}</p>
-          </li>
-        ))}
-      </ul>
+      {/* Dettagli del film */}
+      <h2>Aggiungi una recensione</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Nome</label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="vote" className="form-label">Voto (1-5)</label>
+          <input
+            type="number"
+            className="form-control"
+            id="vote"
+            value={vote}
+            onChange={(e) => setVote(e.target.value)}
+            min="1"
+            max="5"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="text" className="form-label">Recensione</label>
+          <textarea
+            className="form-control"
+            id="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">Invia</button>
+      </form>
     </div>
   );
 };
