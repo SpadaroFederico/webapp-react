@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import MovieCard from '../components/MovieCard';
+import MovieCard from '../components/Home';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);

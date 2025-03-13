@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import MovieDetailPage from './pages/MovieDetailPage';
+import MovieDetailPage from './components/MovieDetail';
 
+// Definisci le rotte
 const router = createBrowserRouter([
   {
     path: '/',
@@ -13,8 +14,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-function Routes() {
+// Crea il componente Routes
+export function Routes() {
   return <RouterProvider router={router} />;
 }
-
-export default Routes;
