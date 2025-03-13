@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Usa Link invece di <a>
+import './Home.css';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -11,16 +13,18 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="container mt-4">
+    <div className="home-container">
       <h1>Lista dei Film</h1>
-      <ul className="list-group">
+      <div className="movie-list">
         {movies.map(movie => (
-          <li key={movie.id} className="list-group-item">
-            <img src={movie.image} alt={movie.title} style={{ width: '100px', height: 'auto' }} />
-            <a href={`/api/movies/${movie.id}`}>{movie.title}</a>
-          </li>
+          <div key={movie.id} className="movie-card">
+            <img src={`/images/${movie.image}`} alt={movie.title} />
+            <h3>
+              <Link to={`/movies/${movie.id}`}>{movie.title}</Link> {/* Usa Link */}
+            </h3>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
