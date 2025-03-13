@@ -16,6 +16,7 @@ const Home = () => {
       <ul className="list-group">
         {movies.map(movie => (
           <li key={movie.id} className="list-group-item">
+            <img src={movie.image} alt={movie.title} style={{ width: '100px', height: 'auto' }} />
             <a href={`/api/movies/${movie.id}`}>{movie.title}</a>
           </li>
         ))}
