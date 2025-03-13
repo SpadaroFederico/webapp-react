@@ -16,6 +16,7 @@ const MovieDetail = () => {
 
   return (
     <div className="container mt-4">
+      <img src={movie.image} alt={movie.title} style={{ width: '200px', height: 'auto' }} />
       <h1>{movie.title}</h1>
       <p>Regista: {movie.director}</p>
       <p>Genere: {movie.genre}</p>
