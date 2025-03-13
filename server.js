@@ -7,10 +7,10 @@ const port = 5174;
 
 // Configurazione del database
 const connection = mysql.createConnection({
-  host: 'localhost',
+  host: '127.0.0.1',
   user: 'root',
-  password: 'password', // Cambia con la tua password
-  database: 'movies_db',
+  password: 'ApologizE1975!1', 
+  database: 'db_movies',
 });
 
 // Middleware per CORS e parsing JSON
